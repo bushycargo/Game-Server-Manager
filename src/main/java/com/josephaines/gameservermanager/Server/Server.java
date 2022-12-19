@@ -13,6 +13,7 @@ public abstract class Server {
     protected String path;
     protected String[] args;
     protected Process process;
+    protected BufferedReader bufferedReader;
 
     // Getters and Setters
     public String getServerId() {
@@ -33,6 +34,10 @@ public abstract class Server {
 
     public String getServerName() {
         return serverName;
+    }
+
+    public BufferedReader getBufferedReader() {
+        return bufferedReader;
     }
 
     public void setServerName(String serverName) {
@@ -59,12 +64,7 @@ public abstract class Server {
         }
         process = processBuilder.start();
 
-        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-        String line;
-        while ((line = reader.readLine()) != null){
-            System.out.println(line);
-        }
-
+        bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
         serverState = ServerState.ONLINE;
     }
 
